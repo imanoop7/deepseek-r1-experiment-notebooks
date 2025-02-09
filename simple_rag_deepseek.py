@@ -84,6 +84,7 @@ def save_file(uploaded_file):
     file_path = PDF_STORAGE_PATH + uploaded_file.name
     with open(file_path, "wb") as file:
         file.write(uploaded_file.getbuffer())
+    print(f"File saved to {file_path}")
     return file_path
 
 def load_documents(file_path):
@@ -100,6 +101,7 @@ def split_documents(raw_documents):
 
 def add_documents_to_index(document_chunks):
     VECTOR_DB.add_documents(document_chunks)
+    print("Documents added to index")
 
 def search_documents(query):
     return VECTOR_DB.similarity_search(query)
@@ -108,6 +110,9 @@ def get_answer(user_query, context_documents):
     context_text = "\n\n".join([doc.page_content for doc in context_documents])
     conversation_prompt = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
     response_chain = conversation_prompt | LLM_MODEL
+    print(f"User Query: {user_query}")
+    print("-------------------------------------")
+    print(f"Context: {context_text}")
     return response_chain.invoke({"user_query": user_query, "document_context": context_text})
 
 
