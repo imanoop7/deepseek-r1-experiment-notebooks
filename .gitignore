@@ -1,3 +1,4 @@
 *.pem
 /chroma_db
 /data
+/document_store
