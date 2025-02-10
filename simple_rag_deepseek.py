@@ -73,7 +73,8 @@ Context: {document_context}
 Answer:
 """
 PDF_STORAGE_PATH = 'document_store/pdfs/'
-EMBEDDING_MODEL = OllamaEmbeddings(model="deepseek-r1:1.5b")
+# EMBEDDING_MODEL = OllamaEmbeddings(model="deepseek-r1:1.5b") # Uncomment this line to use the deepseek-r1 model
+EMBEDDING_MODEL = OllamaEmbeddings(model="nomic-embed-text") # faster model for demo purposes
 VECTOR_DB = InMemoryVectorStore(EMBEDDING_MODEL)
 LLM_MODEL = OllamaLLM(model="deepseek-r1:1.5b")
 
@@ -138,7 +139,7 @@ if uploaded_pdf:
     processed_chunks = split_documents(raw_docs)
     add_documents_to_index(processed_chunks)
     
-    st.success("✅ Document processed successfully! Ask your questions below.")
+    st.success("✅ Your document has been successfully processed! You can now ask questions about its content below.")
     
     user_input = st.chat_input("Enter your question about the document...")
     
